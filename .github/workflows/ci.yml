@@ -41,7 +41,6 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby-version }}
-        bundler-cache: true # 'bundle install' and cache are handled automatically
     - name: Test
       run: ci/sunspot_test_script.sh
       env:
