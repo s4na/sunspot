@@ -42,10 +42,6 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true # 'bundle install' and cache are handled automatically
-    - name: Uninstall and Install Bundler
-      run: |
-        gem uninstall -v '>= 2' -ax bundler || true
-        gem install bundler -v '< 2'
     - name: Test
       run: ci/sunspot_test_script.sh
       env:
