@@ -40,7 +40,7 @@ jobs:
     - name: Uninstall and Install Bundler
       run: |
         gem uninstall -v '>= 2' -ax bundler || true
-        gem install bundler -v '< 2'
+        gem install bundler -v '< 3'
     - name: Test
       run: ci/sunspot_test_script.sh
       env:
