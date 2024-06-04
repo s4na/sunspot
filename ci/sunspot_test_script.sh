@@ -14,12 +14,8 @@ start_solr_server() {
   current_path=`pwd`
   cd ../sunspot_solr
 
-  if [ "$(printf "%s\n" "3.2" "$RUBY_VERSION" | sort -V | tail -n1)" = "$RUBY_VERSION" ]; then
-    bundle config set --local path 'vendor/bundle'
-    bundle install --quiet
-  else
-    bundle install --quiet --path vendor/bundle
-  fi
+  bundle config set --local path 'vendor/bundle'
+  bundle install --quiet
 
   # stop solr of already running (but it should not be)
   if [ -f sunspot-solr.pid ]; then stop_solr_server || true; fi
@@ -49,13 +45,9 @@ case $GEM in
   "sunspot")
 
     cd sunspot
-    
-    if [ "$(printf "%s\n" "3.2" "$RUBY_VERSION" | sort -V | tail -n1)" = "$RUBY_VERSION" ]; then
-      bundle config set --local path 'vendor/bundle'
-      bundle install --quiet
-    else
-      bundle install --quiet --path vendor/bundle
-    fi
+        
+    bundle config set --local path 'vendor/bundle'
+    bundle install --quiet
 
     start_solr_server
 
@@ -70,24 +62,16 @@ case $GEM in
 
   "sunspot_rails")
 
-    cd sunspot
-    if [ "$(printf "%s\n" "3.2" "$RUBY_VERSION" | sort -V | tail -n1)" = "$RUBY_VERSION" ]; then
-      bundle config set --local path 'vendor/bundle'
-      bundle install --quiet
-    else
-      bundle install --quiet --path vendor/bundle
-    fi
+    cd sunspot    
+    bundle config set --local path 'vendor/bundle'
+    bundle install --quiet
 
     start_solr_server
 
     cd ../sunspot_rails
 
-    if [ "$(printf "%s\n" "3.2" "$RUBY_VERSION" | sort -V | tail -n1)" = "$RUBY_VERSION" ]; then
-      bundle config set --local path 'vendor/bundle'
-      bundle install --quiet
-    else
-      bundle install --quiet --path vendor/bundle
-    fi
+    bundle config set --local path 'vendor/bundle'
+    bundle install --quiet
 
     gem list
     bundle exec appraisal install && bundle exec appraisal rspec
@@ -103,12 +87,8 @@ case $GEM in
 
     cd sunspot_solr
     
-    if [ "$(printf "%s\n" "3.2" "$RUBY_VERSION" | sort -V | tail -n1)" = "$RUBY_VERSION" ]; then
-      bundle config set --local path 'vendor/bundle'
-      bundle install --quiet
-    else
-      bundle install --quiet --path vendor/bundle
-    fi
+    bundle config set --local path 'vendor/bundle'
+    bundle install --quiet
 
     bundle exec rake spec
     exit $?
