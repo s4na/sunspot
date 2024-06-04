@@ -14,8 +14,12 @@ start_solr_server() {
   current_path=`pwd`
   cd ../sunspot_solr
 
-  bundle config set --local path 'vendor/bundle'
-  bundle install --quiet
+  if [ "$(printf "%s\n" "3.2" "$RUBY_VERSION" | sort -V | tail -n1)" = "$RUBY_VERSION" ]; then
+    bundle config set --local path 'vendor/bundle'
+    bundle install --quiet
+  else
+    bundle install --quiet --path vendor/bundle
+  fi
 
   # stop solr of already running (but it should not be)
   if [ -f sunspot-solr.pid ]; then stop_solr_server || true; fi
@@ -45,9 +49,13 @@ case $GEM in
   "sunspot")
 
     cd sunspot
-        
-    bundle config set --local path 'vendor/bundle'
-    bundle install --quiet
+    
+    if [ "$(printf "%s\n" "3.2" "$RUBY_VERSION" | sort -V | tail -n1)" = "$RUBY_VERSION" ]; then
+      bundle config set --local path 'vendor/bundle'
+      bundle install --quiet
+    else
+      bundle install --quiet --path vendor/bundle
+    fi
 
     start_solr_server
 
@@ -62,16 +70,24 @@ case $GEM in
 
   "sunspot_rails")
 
-    cd sunspot    
-    bundle config set --local path 'vendor/bundle'
-    bundle install --quiet
+    cd sunspot
+    if [ "$(printf "%s\n" "3.2" "$RUBY_VERSION" | sort -V | tail -n1)" = "$RUBY_VERSION" ]; then
+      bundle config set --local path 'vendor/bundle'
+      bundle install --quiet
+    else
+      bundle install --quiet --path vendor/bundle
+    fi
 
     start_solr_server
 
     cd ../sunspot_rails
 
-    bundle config set --local path 'vendor/bundle'
-    bundle install --quiet
+    if [ "$(printf "%s\n" "3.2" "$RUBY_VERSION" | sort -V | tail -n1)" = "$RUBY_VERSION" ]; then
+      bundle config set --local path 'vendor/bundle'
+      bundle install --quiet
+    else
+      bundle install --quiet --path vendor/bundle
+    fi
 
     gem list
     bundle exec appraisal install && bundle exec appraisal rspec
@@ -87,8 +103,12 @@ case $GEM in
 
     cd sunspot_solr
     
-    bundle config set --local path 'vendor/bundle'
-    bundle install --quiet
+    if [ "$(printf "%s\n" "3.2" "$RUBY_VERSION" | sort -V | tail -n1)" = "$RUBY_VERSION" ]; then
+      bundle config set --local path 'vendor/bundle'
+      bundle install --quiet
+    else
+      bundle install --quiet --path vendor/bundle
+    fi
 
     bundle exec rake spec
     exit $?
