@@ -2,25 +2,8 @@ name: CI
 
 on: [push, pull_request]
 
-jobs:
-  skip_concurrent_build:
-    name: Skip Concurrent Builds
-    runs-on: ubuntu-latest
-    outputs:
-      should_skip: ${{ steps.skip_check.outputs.should_skip }}
-    steps:
-      - uses: fkirc/skip-duplicate-actions@v5.3.0
-        id: skip_check
-        with:
-          concurrent_skipping: 'same_content'
-          github_token: ${{ github.token }}
-          do_not_skip: '["pull_request"]'
-          cancel_others: 'true'
-          skip_after_successful_duplicate: 'false'
-          
+jobs:  
   build:
-    needs: skip_concurrent_build
-    if: ${{ needs.skip_concurrent_build.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
     strategy:
@@ -32,13 +15,15 @@ jobs:
           - '2.7'
           - '3.0'
           - '3.1'
-          # - 'head'
+          - '3.2'
+          - '3.3'
+          - 'head'
         gem: ['sunspot', 'sunspot_rails', 'sunspot_solr']
         update-format: ['xml', 'json']
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up JDK 1.8
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         java-version: '8'
         distribution: 'adopt'
