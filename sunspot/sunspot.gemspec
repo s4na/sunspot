@@ -33,6 +33,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake', '~> 13.2'
   s.add_development_dependency 'rspec', '~> 3.7'
   s.add_development_dependency 'appraisal', '~> 2.5'
+  s.add_development_dependency 'rdoc'
 
   s.rdoc_options << '--webcvs=http://github.com/outoftime/sunspot/tree/master/%s' <<
                   '--title' << 'Sunspot - Solr-powered search for Ruby objects - API Documentation' <<
