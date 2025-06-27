@@ -11,6 +11,8 @@ describe 'indexing' do
     post = Post.new(:title => 'test post')
     Sunspot.index!(post)
     Sunspot.remove!(post)
+    # Add a small sleep to ensure commit completes on Ruby 2.7
+    sleep 0.1 if RUBY_VERSION.start_with?('2.7')
     expect(Sunspot.search(Post) { with(:title, 'test post') }.results).to be_empty
   end
 
